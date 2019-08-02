@@ -17,4 +17,26 @@ class TarefasController extends Controller
         return Response()->json(listaDeTarefas::orderBy('id', 'desc')->get(), 200);
     }
 
+    //metodo para armazenar dados
+    //método acessado pelo url fornecida em adicionarTarefas, no angular (public/js/app.js)
+    public function store(Request $request){
+        //request para trabalhar com os dados enviados do formulário, pelo controller do angular
+        //model
+        $tarefa = new listaDeTarefas();
+
+        //recebe dados enviado do formulário resources/views/index.pgp
+        $tarefa->texto = $request->input('texto');
+        $tarefa->autor = $request->input('autor');
+        $tarefa->status = $request->input('status');
+
+        //grava dados no bd
+        if($tarefa->save()){
+            //resposta enviada para o controller do angular (public/js/app.js)
+            return Response("1", 201);
+        }else{
+            //resposta enviada para o controller do angular (public/js/app.js)
+            return Response("0", 304);
+        }
+    }
+
 }

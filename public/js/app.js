@@ -18,6 +18,28 @@
         }
 
         $scope.loadData();
+        //método para adicionar tarefa
+        $scope.adicionarTarefa = function(){
+            dadosPost = {'texto':$scope.texto, 'autor':$scope.autor,
+                'status':$scope.status}
+            //realiza requisição do tipo post, para gravar dados
+            //envia dos dados do formulário pelo array dadosPost para a rota de url, que acessará o controller Laravel
+                //TarefasController no método store (requisição post)
+            var requisicao = $http({method:"post", url:"api/tarefas",
+            data:dadosPost}).success(function(data,status){
+                //se gravou os dados
+                if(data && status == 201){//status agora recebe o status da resposta HTTP de $http
+                    //atualiza dados exibidos na tela e limpa os campos do formulário resoucers/views/index.php
+                    $scope.loadData(function(){
+                        $scope.texto ='';
+                        $scope.autor ='';
+                        $scope.status ='';
+                      });
+                }else{
+                    window.alert("Não foi possível adicionar tarefa.");
+                }
+            });
+        }
     });
 
 })();

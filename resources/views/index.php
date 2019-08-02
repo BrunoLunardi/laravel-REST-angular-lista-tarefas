@@ -16,6 +16,27 @@
         <h2>Minha lista de tarefas</h2>
     </div>
     
+    <!-- ng-submit -> angular para manipular dados do formulário -->
+    <!-- Dados do formulário serão enviados para o controller do angular (public/js/app.js) -->
+    <form ng-submit="adicionarTarefa()">
+        <!-- ng-model é similar ao atributo name -->
+        <label for="texto">Tarefa</label>
+        <input id="texto" type="text" ng-model="texto" required
+            placeholder="Texto" class="form-control" />
+        <label for="autor">Autor</label>
+        <input id="autor" type="text" ng-model="autor" required
+            placeholder="Autor" class="form-control" />
+        <label for="status">Status</label>
+        <select id="status" ng-model="status" required class="form-control">
+            <option value="Concluído">Concluído</option>
+            <option value="Pendente">Pendente</option>
+        </select>
+
+        <input type="submit" value="Cadastrar" class="btn btn-default" />
+
+    </form>
+
+
     <!-- Tabelas para exibir os dados -->
     <table class="table table-striped">
         <thead>
