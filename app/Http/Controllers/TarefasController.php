@@ -39,4 +39,20 @@ class TarefasController extends Controller
         }
     }
 
+    //função para alterar o status da tarefa no BD
+    public function update($id, Request $request){
+        //localiza a tarefa do BD pela id
+        $tarefa = listaDeTarefas::find($id);
+        //objeto $tarefa recebe novo status
+        $tarefa->status = $request->input('status');
+        //atualiza novo status no BD
+        if($tarefa->save()){
+            //retorna json e valor da resposta de sucesso de alteração de dados
+            return Response()->json($tarefa, 201);
+        }else{
+            //erro ao inserir dados
+            return Responser("0", 304);
+        }
+    }
+
 }

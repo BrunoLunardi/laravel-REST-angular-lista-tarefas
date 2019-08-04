@@ -44,14 +44,34 @@
                 <th>Tarefa</th>
                 <th>Autor</th>
                 <th>Status</th>
+                <th>Alterar</th>
             </tr>
         </thead>
-        <!-- Loop para apresentar os dadostarefas encontrado em public/js/app.js -->
-        <tr ng-repeat="tarefa in dadostarefas">
-            <td>{{tarefa.texto}}</td>
-            <td>{{tarefa.autor}}</td>
-            <td>{{tarefa.status}}</td>
-        </tr>
+        <tbody>
+            <!-- recupera os dados via angular -->
+            <!-- Loop para apresentar os dadostarefas encontrado em public/js/app.js -->
+            <tr ng-repeat="tarefa in dadostarefas">
+                <td>{{tarefa.texto}}</td>
+                <td>{{tarefa.autor}}</td>
+                <td>{{tarefa.status}}</td>
+                <td width='10%'>
+                    <!-- Verifica pelo angular o status da tarefa -->
+                    <!-- Se for concluído, pode alterar para pendente -->
+                    <span ng-if="tarefa.status == 'Concluído'">
+                        <input type="button" value="Marcar como Pendente"
+                            class="btn btn-success"
+                            ng-click="mudarStatus(tarefa.id, 'Pendente')" />
+                    </span>
+                    <!-- Verifica pelo angular o status da tarefa -->
+                    <!-- Se for diferente de concluído, pode alterar para concluído -->
+                    <span ng-if="tarefa.status != 'Concluído'">
+                    <input type="button" value="Marcar como Concluído"
+                            class="btn btn-warning"
+                            ng-click="mudarStatus(tarefa.id, 'Concluído')" />
+                    </span>
+                </td>
+            </tr>
+        </tbody>
     </table>
     <!-- 
     <div>

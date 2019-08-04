@@ -18,7 +18,8 @@
         }
 
         $scope.loadData();
-        //método para adicionar tarefa
+
+        //função para adicionar tarefa
         $scope.adicionarTarefa = function(){
             dadosPost = {'texto':$scope.texto, 'autor':$scope.autor,
                 'status':$scope.status}
@@ -40,6 +41,25 @@
                 }
             });
         }
+
+        //função para alterar status da tarefa
+        $scope.mudarStatus = function(id, status){
+            //recebe o novo dados de status
+            dadosPost = {'status':status};
+            //recebe os dados para altera a tarefa (recebe de resoucer/views/index.php)
+            var requisicao = $http({method:"put",
+                //passa para a rota laravel a id da tarefa e os dados novos da tarefa 
+                //(no caso só a alteração do status)
+                url:"api/tarefas/"+id,data:dadosPost}).success(function(data, status){
+                    if(data.id == id && status == 201){//status agora é o status da resposta HTTP recebido de $http.
+                        //atualiza tabela com novos dados
+                        $scope.loadData();
+                    }else{
+                        window.alert("Não foi possível alterar a tarefa.");
+                    }
+                });
+        }
+
     });
 
 })();
