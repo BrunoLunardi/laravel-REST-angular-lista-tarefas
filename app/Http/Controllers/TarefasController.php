@@ -40,6 +40,7 @@ class TarefasController extends Controller
     }
 
     //função para alterar o status da tarefa no BD
+    //acessada pela url enviada de public/js/app.js
     public function update($id, Request $request){
         //localiza a tarefa do BD pela id
         $tarefa = listaDeTarefas::find($id);
@@ -52,6 +53,19 @@ class TarefasController extends Controller
         }else{
             //erro ao inserir dados
             return Responser("0", 304);
+        }
+    }
+
+    //função para exclusão de tarefas no BD
+    //acessada pela url enviada de public/js/app.js
+    public function destroy($id){
+        $tarefa = listaDeTarefas::find($id);
+        if($tarefa->delete()){
+            //retorna json e valor da resposta de sucesso de alteração de dados
+            return Response("1", 200);
+        }else{
+            //erro ao inserir dados
+            return Response("0", 304);
         }
     }
 

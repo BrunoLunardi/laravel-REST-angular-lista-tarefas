@@ -20,6 +20,7 @@
         $scope.loadData();
 
         //função para adicionar tarefa
+        //acessada pelo resources/views/index.php ->  ng-submit="adicionarTarefa()
         $scope.adicionarTarefa = function(){
             dadosPost = {'texto':$scope.texto, 'autor':$scope.autor,
                 'status':$scope.status}
@@ -43,6 +44,7 @@
         }
 
         //função para alterar status da tarefa
+        //acessada pelo resources/views/index.php -> ng-click="mudarStatus"
         $scope.mudarStatus = function(id, status){
             //recebe o novo dados de status
             dadosPost = {'status':status};
@@ -58,6 +60,25 @@
                         window.alert("Não foi possível alterar a tarefa.");
                     }
                 });
+        }
+
+
+        //função para excluir dados
+        //acessada pelo resources/views/index.php -> ng-click="excluirTarefa()"
+        $scope.excluirTarefa = function(id){
+            //confirm -> método nativo do javascript para confirmar ação do usuário
+            if(confirm("Confirma a exclusão da tarefa?")){
+                //se ação for confirmada envia dados para o controller laravel
+                var requisicao = $http({method:"delete",
+                    url:"api/tarefas/"+id}).success(function(data, status){
+                        if(data == 1 && status == 200){
+                            //recarrega dados da página
+                            $scope.loadData();
+                        }else{
+                            window.alert("Não foi possível excluir a tarefa.");
+                        }
+                    });
+            }
         }
 
     });

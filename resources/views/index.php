@@ -36,54 +36,50 @@
 
     </form>
 
+    <div class="container">
+        <div class="row" ng-repeat="tarefa in dadostarefas" ng-class-odd="'odd'"
+            ng-class-even="'even'">
+            <div class="col-sm-1">
+                <!-- chama método para excluir tarefa -->
+                <!-- método está em public/js/app.js -->
+                <span ng-click="excluirTarefa(tarefa.id)"
+                    class="glyphicon glyphicon-remove"
+                    aria-hidden="true"> </span>
+            </div>
+            <!-- Exibe dados recuperados da controller TarefasController de public/js/app.js -->
+            <div class="col-sm-3">{{tarefa.texto}}</div>
+            <div class="col-sm-3">{{tarefa.autor}}</div>
+            <div class="col-sm-3">{{tarefa.status}}</div>
 
-    <!-- Tabelas para exibir os dados -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Tarefa</th>
-                <th>Autor</th>
-                <th>Status</th>
-                <th>Alterar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- recupera os dados via angular -->
-            <!-- Loop para apresentar os dadostarefas encontrado em public/js/app.js -->
-            <tr ng-repeat="tarefa in dadostarefas">
-                <td>{{tarefa.texto}}</td>
-                <td>{{tarefa.autor}}</td>
-                <td>{{tarefa.status}}</td>
-                <td width='10%'>
-                    <!-- Verifica pelo angular o status da tarefa -->
-                    <!-- Se for concluído, pode alterar para pendente -->
-                    <span ng-if="tarefa.status == 'Concluído'">
-                        <input type="button" value="Marcar como Pendente"
-                            class="btn btn-success"
-                            ng-click="mudarStatus(tarefa.id, 'Pendente')" />
-                    </span>
-                    <!-- Verifica pelo angular o status da tarefa -->
-                    <!-- Se for diferente de concluído, pode alterar para concluído -->
-                    <span ng-if="tarefa.status != 'Concluído'">
+            <div class="col-sm-2">
+                <!-- Verifica pelo angular o status da tarefa -->
+                <!-- Se for concluído, pode alterar para pendente -->
+                <span ng-if="tarefa.status == 'Concluído'">
+                    <input type="button" value="Marcar como Pendente"
+                        class="btn btn-success"
+                        ng-click="mudarStatus(tarefa.id, 'Pendente')" />
+                </span>
+                <!-- Verifica pelo angular o status da tarefa -->
+                <!-- Se for diferente de concluído, pode alterar para concluído -->
+                <span ng-if="tarefa.status != 'Concluído'">
                     <input type="button" value="Marcar como Concluído"
-                            class="btn btn-warning"
-                            ng-click="mudarStatus(tarefa.id, 'Concluído')" />
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- 
-    <div>
-        //Exibe dados recuperados da controller TarefasController de public/js/app.js
-        <h3>Tarefa: {{tarefas.tarefa.texto}}</h3>
-        <h4>Autor: {{tarefas.tarefa.autor}}</h4>
-        <h4>Status: {{tarefas.tarefa.status}}</h4>
+                        class="btn btn-warning"
+                        ng-click="mudarStatus(tarefa.id, 'Concluído')" />
+                </span>            
+            </div>
+        </div>
     </div>
-    -->
+    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js">
     </script>
     <script src="js/app.js"></script>
+
+    <style>
+        .even{background-color: #EFEFEF;}
+        .odd{background-color: #DDDDDD;}
+        .header{text-align: center;}
+    </style>
+
 </body>
 
 </html>
