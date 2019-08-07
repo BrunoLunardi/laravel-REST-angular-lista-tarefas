@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         //desabili mecanismo de proteção dos models Laravel
         Model::unguard();
         //executa seeds da classe informada
-        $this->call(ListaDeTarefas::class);
+        //$this->call(ListaDeTarefas::class);
+        $this->call(Usuarios::class);
         //mensagem de sucesso
         $this->command->info(
             'Tarefas adicionadas com sucesso a tabela ListaDeTarefas'

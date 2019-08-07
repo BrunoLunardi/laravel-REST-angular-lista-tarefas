@@ -1,4 +1,6 @@
 (function(){
+    //token para acessar api
+    var token = "123456";
     //define o nome do modulo que estamos utilizando
     //está em resoucers/views/index.php
     var app = angular.module('tarefas', []);
@@ -11,7 +13,7 @@
         $scope.loadData = function(){
             //obtém os dados que serão retornados para esta URL
                 //pega os dados retornados da rota e do controller laravel
-            $http.get('http://localhost:8000/api/tarefas').success(function(data){
+            $http.get('http://localhost:8000/api/tarefas?api_token='+token).success(function(data){
                 //armazena os dados obtidos na url
                 $scope.dadostarefas = data;
             });
@@ -27,7 +29,7 @@
             //realiza requisição do tipo post, para gravar dados
             //envia dos dados do formulário pelo array dadosPost para a rota de url, que acessará o controller Laravel
                 //TarefasController no método store (requisição post)
-            var requisicao = $http({method:"post", url:"api/tarefas",
+            var requisicao = $http({method:"post", url:"api/tarefas?api_token="+token,
             data:dadosPost}).success(function(data,status){
                 //se gravou os dados
                 if(data && status == 201){//status agora recebe o status da resposta HTTP de $http
@@ -52,7 +54,7 @@
             var requisicao = $http({method:"put",
                 //passa para a rota laravel a id da tarefa e os dados novos da tarefa 
                 //(no caso só a alteração do status)
-                url:"api/tarefas/"+id,data:dadosPost}).success(function(data, status){
+                url:"api/tarefas/"+id+"?api_token="+token,data:dadosPost}).success(function(data, status){
                     if(data.id == id && status == 201){//status agora é o status da resposta HTTP recebido de $http.
                         //atualiza tabela com novos dados
                         $scope.loadData();
@@ -70,7 +72,7 @@
             if(confirm("Confirma a exclusão da tarefa?")){
                 //se ação for confirmada envia dados para o controller laravel
                 var requisicao = $http({method:"delete",
-                    url:"api/tarefas/"+id}).success(function(data, status){
+                    url:"api/tarefas/"+id+"?api_token="+token}).success(function(data, status){
                         if(data == 1 && status == 200){
                             //recarrega dados da página
                             $scope.loadData();

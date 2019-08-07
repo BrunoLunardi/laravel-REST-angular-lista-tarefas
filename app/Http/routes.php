@@ -21,7 +21,8 @@ Route::get('/', function () {
 });
 
 //grupo de rotas com o prefixo api
-Route::group(array('prefix' => 'api'), function(){
+//middleware => permite que somente acessos autenticados consigam acessar a api
+Route::group(array('prefix' => 'api', 'middleware' => 'auth:api'), function(){
     //rota api/tarefas 
     Route::resource('tarefas', 'TarefasController');
 });
